@@ -15,7 +15,7 @@ server.listen(port, function(request, response) {
         var match;
         var status;
 
-        for(var i = 0; i < matches.length; i++) {
+        for (var i = 0; i < matches.length; i++) {
           match = matches[i];
           status = match.querySelector(".cell.status span");
 
@@ -34,7 +34,7 @@ server.listen(port, function(request, response) {
       } else {
         setTimeout(function() {
           getJobs(callback);
-        }, 250);
+        }, 200);
       }
     }
 
