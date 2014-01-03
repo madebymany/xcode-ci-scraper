@@ -13,13 +13,16 @@ server.listen(port, function(request, response) {
         var data = [];
         var matches = document.querySelectorAll(".xc-paginating-bot-list-view-item.row");
         var match;
+        var status;
 
         for(var i = 0; i < matches.length; i++) {
           match = matches[i];
+          status = match.querySelector(".cell.status span");
 
           data.push({
             "name": match.querySelector(".cell.name a").innerHTML,
-            "status": match.querySelector(".cell.status span").dataset.status,
+            "status": status.dataset.status,
+            "subStatus": status.dataset.subStatus
           });
         }
 
@@ -36,9 +39,16 @@ server.listen(port, function(request, response) {
     }
 
     getJobs(function(jobs) {
+      var result = JSON.stringify(jobs);
+      var callback = request.url.match(/jsonp=([^&]+)/);
+
+      if (callback) {
+        result = callback[1] + "(" + result + ")";
+      }
+
       response.statusCode = 200;
       response.setHeader("Content-Type", "application/json");
-      response.write("jsonp(" + JSON.stringify(jobs) + ")");
+      response.write(result);
       response.close();
 
       page.close();
