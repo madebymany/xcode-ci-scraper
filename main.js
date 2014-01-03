@@ -36,12 +36,9 @@ server.listen(port, function(request, response) {
     }
 
     getJobs(function(jobs) {
-      response.headers = {
-        "Content-Type": "application/json"
-      };
-
       response.statusCode = 200;
-      response.write(JSON.stringify(jobs));
+      response.setHeader("Content-Type", "application/json");
+      response.write("jsonp(" + JSON.stringify(jobs) + ")");
       response.close();
 
       page.close();
