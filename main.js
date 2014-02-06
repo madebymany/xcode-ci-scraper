@@ -1,7 +1,7 @@
 var server = require("webserver").create();
 var url = "http://cis-mac-mini.local/";
 var port = 3000;
-var timeout = 3000;
+var timeout = 6000;
 
 console.log("Server started at http://127.0.0.1:" + port + "/");
 
