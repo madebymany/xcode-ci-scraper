@@ -1,6 +1,7 @@
 var server = require("webserver").create();
 var url = "http://cis-mac-mini.local/";
 var port = 3000;
+var timeout = 3000;
 
 console.log("Server started at http://127.0.0.1:" + port + "/");
 
@@ -46,12 +47,18 @@ server.listen(port, function(request, response) {
         result = callback[1] + "(" + result + ")";
       }
 
+      page.close();
       response.statusCode = 200;
       response.setHeader("Content-Type", "application/json");
       response.write(result);
       response.close();
-
-      page.close();
     });
   });
+
+  setTimeout(function() {
+    page.close();
+    response.statusCode = 408;
+    response.write("");
+    response.close();
+  }, timeout);
 });
